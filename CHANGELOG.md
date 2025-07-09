@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.9
+
+### Patch Changes
+
+- Adding new features, themes
+
 ## 0.0.8
 
 ### Patch Changes

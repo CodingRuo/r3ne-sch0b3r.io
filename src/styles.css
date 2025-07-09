@@ -1,51 +1,58 @@
-:root {
-    --font-terminal: 'Maple Mono', 'Fira Code', 'Menlo', monospace;
+/* src/styles.css */
 
-    --ctp-rosewater: #f5e0dc;
-    --ctp-flamingo: #f2cdcd;
-    --ctp-pink: #f5c2e7;
-    --ctp-mauve: #cba6f7;
-    --ctp-red: #f38ba8;
-    --ctp-maroon: #eba0ac;
-    --ctp-peach: #fab387;
-    --ctp-yellow: #f9e2af;
-    --ctp-green: #a6e3a1;
-    --ctp-teal: #94e2d5;
-    --ctp-sky: #89dceb;
-    --ctp-sapphire: #74c7ec;
-    --ctp-blue: #89b4fa;
-    --ctp-lavender: #b4befe;
-    --ctp-text: #cdd6f4;
-    --ctp-subtext1: #bac2de;
-    --ctp-subtext0: #a6adc8;
-    --ctp-overlay2: #9399b2;
-    --ctp-overlay1: #7f849c;
-    --ctp-overlay0: #6c7086;
-    --ctp-surface2: #585b70;
-    --ctp-surface1: #45475a;
-    --ctp-surface0: #313244;
+:root,
+.theme-mocha {
+    --font-terminal: 'Maple Mono', 'Fira Code', 'Menlo', monospace;
+    /* Catppuccin Mocha Palette */
     --ctp-base: #1e1e2e;
     --ctp-mantle: #181825;
     --ctp-crust: #11111b;
+    --ctp-text: #cdd6f4;
+    --ctp-subtext1: #bac2de;
+    --ctp-surface0: #313244;
+    --ctp-blue: #89b4fa;
+    --ctp-yellow: #f9e2af;
+    --ctp-green: #a6e3a1;
+    --ctp-red: #f38ba8;
+    --ctp-mauve: #cba6f7;
+    --ctp-sky: #89dceb;
+    --ctp-shadow: rgba(0, 0, 0, 0.4);
+}
+
+.theme-latte {
+    --ctp-base: #eff1f5;
+    --ctp-mantle: #e6e9ef;
+    --ctp-crust: #dce0e8;
+    --ctp-text: #4c4f69;
+    --ctp-subtext1: #5c5f77;
+    --ctp-surface0: #acb0be;
+    --ctp-blue: #1e66f5;
+    --ctp-yellow: #df8e1d;
+    --ctp-green: #40a02b;
+    --ctp-red: #d20f39;
+    --ctp-mauve: #8839ef;
+    --ctp-sky: #04a5e5;
+    --ctp-shadow: rgba(0, 0, 0, 0.15);
 }
 
 .interactive-cv-modal {
+    background-color: var(--ctp-base);
+    color: var(--ctp-text);
+    /* ... restliche Styles von vorher bleiben gleich ... */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 720px;
     height: 520px;
-    background-color: var(--ctp-base);
     border: 1px solid var(--ctp-surface0);
     border-radius: 12px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px -12px var(--ctp-shadow);
     display: flex;
     flex-direction: column;
     font-family: var(--font-terminal);
     font-size: 14px;
     z-index: 9999;
-    color: var(--ctp-text);
     overflow: hidden;
 }
 
@@ -82,8 +89,21 @@
     background-color: var(--ctp-green);
 }
 
+/* NEU: Theme Switcher Button */
+.icv-theme-switcher {
+    background-color: var(--ctp-surface0);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: auto;
+    /* Schiebt ihn nach rechts */
+    margin-right: 12px;
+    border: 1px solid var(--ctp-overlay0);
+}
+
 .icv-header-title {
-    color: var(--ctp-subtext0);
+    color: var(--ctp-subtext1);
     text-align: center;
     flex-grow: 1;
     font-weight: 500;
@@ -115,29 +135,6 @@
     color: var(--ctp-text);
 }
 
-.icv-output {
-    white-space: pre-wrap;
-    color: var(--ctp-subtext1);
-}
-
-.icv-output strong {
-    color: var(--ctp-mauve);
-    font-weight: bold;
-}
-
-.icv-output .highlight {
-    color: var(--ctp-yellow);
-}
-
-.icv-output a {
-    color: var(--ctp-sky);
-    text-decoration: underline;
-}
-
-.icv-output .success {
-    color: var(--ctp-green);
-}
-
 .icv-input-line {
     display: flex;
     padding: 12px;
@@ -161,7 +158,6 @@
 .icv-input::after {
     content: '▋';
     animation: blink 1s step-end infinite;
-    margin-left: 2px;
 }
 
 @keyframes blink {
@@ -170,6 +166,41 @@
     }
 }
 
+/* NEU: Angepasstes Styling für den Output */
+.icv-output {
+    white-space: pre-wrap;
+    color: var(--ctp-subtext1);
+    text-align: left;
+    /* Sorgt für generelle Linksbündigkeit */
+}
+
+.icv-output-welcome {
+    margin-bottom: 1rem;
+}
+
+.icv-output strong {
+    color: var(--ctp-mauve);
+    font-weight: bold;
+}
+
+.icv-output .highlight {
+    color: var(--ctp-yellow);
+}
+
+.icv-output a {
+    color: var(--ctp-sky);
+    text-decoration: underline;
+}
+
+.icv-output a:hover {
+    color: var(--ctp-sapphire);
+}
+
+.icv-output .success {
+    color: var(--ctp-green);
+}
+
+/* NEU: Styling für die help-Tabelle */
 .icv-help-table {
     width: 100%;
     border-collapse: collapse;
@@ -181,6 +212,7 @@
 .icv-help-description {
     vertical-align: top;
     padding-bottom: 4px;
+    text-align: left;
 }
 
 .icv-help-command {

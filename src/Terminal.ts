@@ -1,4 +1,4 @@
-import type { TerminalOptions, Command, CommandMap } from './types';
+import type { TerminalOptions, Command, CommandMap, Theme, Project } from './types';
 
 export class Terminal {
     private options: TerminalOptions;
@@ -7,6 +7,37 @@ export class Terminal {
     private body: HTMLElement;
     private input: HTMLInputElement;
     private commands: CommandMap;
+    private projects: Project[];
+    private themes: { [key: string]: Theme };
+    private currentTheme: string;
+    private themeKeys: string[];
+
+    private readonly defaultProjects: Project[] = [
+        {
+            name: 'Admin-Oberfläche (Eigenverantwortliche Neuentwicklung)',
+            description: '→ Komplexe Vue.js/Quasar Anwendung mit Node.js Backend nach Clean-Architecture-Prinzipien.',
+        },
+        {
+            name: 'DevOps & Server-Infrastruktur',
+            description: '→ Aufbau und Verwaltung von Linux-Servern, Docker-Containern und NGINX-Konfigurationen.',
+            url: 'https://github.com/codingruo'
+        }
+    ];
+
+    private readonly defaultThemes: { [key: string]: Theme } = {
+        mocha: {
+            '--ctp-base': '#1e1e2e', '--ctp-text': '#cdd6f4', '--ctp-mantle': '#181825',
+            '--ctp-surface0': '#313244', '--ctp-blue': '#89b4fa', '--ctp-yellow': '#f9e2af',
+            '--ctp-green': '#a6e3a1', '--ctp-red': '#f38ba8', '--ctp-mauve': '#cba6f7',
+            '--ctp-sky': '#89dceb', '--ctp-shadow': 'rgba(0,0,0,0.4)'
+        },
+        latte: {
+            '--ctp-base': '#eff1f5', '--ctp-text': '#4c4f69', '--ctp-mantle': '#e6e9ef',
+            '--ctp-surface0': '#acb0be', '--ctp-blue': '#1e66f5', '--ctp-yellow': '#df8e1d',
+            '--ctp-green': '#40a02b', '--ctp-red': '#d20f39', '--ctp-mauve': '#8839ef',
+            '--ctp-sky': '#04a5e5', '--ctp-shadow': 'rgba(0,0,0,0.15)'
+        }
+    };
 
     private readonly defaultCommands: CommandMap = {
         'rene.whoami': {
@@ -24,15 +55,34 @@ export class Terminal {
         },
         'rene.showprojects': {
             description: 'Zeigt eine Übersicht meiner Schlüsselprojekte.',
-            output: `Hier sind meine Kernprojekte. Für Details scrolle bitte zur Projekt-Sektion auf der Webseite.\n\n` +
-                `1. Admin-Oberfläche (Eigenverantwortliche Neuentwicklung)\n` +
-                `2. DevOps & Server-Infrastruktur`
+            output: () => {
+                let projectOutput = 'Hier sind meine Kernprojekte. Für Details besuche bitte die verlinkten Seiten.<br><br>';
+                this.projects.forEach(p => {
+                    if (p.url) {
+                        projectOutput += `<strong><a href="${p.url}" target="_blank">${p.name}</a></strong><br>${p.description}<br><br>`;
+                    } else {
+                        projectOutput += `<strong>${p.name}</strong><br>${p.description}<br><br>`;
+                    }
+                });
+                return projectOutput;
+            }
         },
         'rene.contact': {
             description: 'Gibt meine Kontaktdaten aus.',
-            output: `Du kannst mich gerne jederzeit erreichen:\n\n` +
-                `📧 E-Mail:   deine.email@provider.com\n` +
-                `💼 LinkedIn: linkedin.com/in/dein-profil`
+            output: `Du kannst mich gerne jederzeit erreichen:<br><br>` +
+                `📧 <strong>E-Mail:</strong>   <a href="mailto:deine.email@provider.com">deine.email@provider.com</a><br>` +
+                `💼 <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/dein-profil" target="_blank">linkedin.com/in/dein-profil</a>`
+        },
+        'theme': {
+            description: 'Ändert das Farbschema. Verfügbar: [themes].',
+            output: (params?: string[]) => {
+                const themeName = params?.[0]?.toLowerCase();
+                if (themeName && this.themes[themeName]) {
+                    this.setTheme(themeName);
+                    return `<span class="success">Theme erfolgreich zu '${themeName}' geändert.</span>`;
+                }
+                return `Fehler: Unbekanntes Theme. Verfügbar sind: ${this.themeKeys.join(', ')}`;
+            }
         },
         'help': {
             description: 'Zeigt alle Befehle an.',
@@ -60,20 +110,17 @@ export class Terminal {
 
     constructor(options: TerminalOptions) {
         this.options = options;
+        this.projects = this.options.projects || this.defaultProjects;
+        this.themes = { ...this.defaultThemes, ...this.options.customThemes };
+        this.themeKeys = Object.keys(this.themes);
+        this.currentTheme = this.options.defaultTheme || 'mocha';
 
         const safeCustomCommands = { ...this.options.customCommands };
-        if (safeCustomCommands.help) {
-            console.warn('[InteractiveCV] Der "help"-Befehl kann nicht überschrieben werden.');
-            delete safeCustomCommands.help;
-        }
-        if (safeCustomCommands.clear) {
-            delete safeCustomCommands.clear;
-        }
-
+        if (safeCustomCommands.help) delete safeCustomCommands.help;
+        if (safeCustomCommands.clear) delete safeCustomCommands.clear;
         this.commands = { ...this.defaultCommands, ...safeCustomCommands };
 
         this.modal = this.createTerminalElement();
-
         if (this.options.width) this.modal.style.width = this.options.width;
         if (this.options.height) this.modal.style.height = this.options.height;
 
@@ -81,6 +128,7 @@ export class Terminal {
         this.input = this.modal.querySelector('.icv-input')!;
 
         this.attachEventListeners();
+        this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
         this.options.mountPoint.appendChild(this.modal);
     }
@@ -96,10 +144,11 @@ export class Terminal {
           <div class="icv-btn maximize"></div>
         </div>
         <span class="icv-header-title">rene-schober -- bash</span>
+        <div class="icv-theme-switcher" title="Theme wechseln"></div>
       </div>
       <div class="icv-body"></div>
       <div class="icv-input-line">
-        <span class="icv-prompt">${this.options.prompt || '$'}</span>
+        <span class="icv-prompt">${this.options.prompt || '>'}</span>
         <input type="text" class="icv-input" autofocus />
       </div>
     `;
@@ -109,15 +158,15 @@ export class Terminal {
     private attachEventListeners() {
         this.input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 const command = this.input.value.trim();
-                this.executeCommand(command);
+                if (command) this.executeCommand(command);
                 this.input.value = '';
             }
         });
-        const closeBtn = this.modal.querySelector('.icv-btn.close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.close());
-        }
+
+        this.modal.querySelector('.icv-btn.close')?.addEventListener('click', () => this.close());
+        this.modal.querySelector('.icv-theme-switcher')?.addEventListener('click', () => this.cycleTheme());
     }
 
     private showWelcomeMessage() {
@@ -201,5 +250,21 @@ export class Terminal {
 
     public destroy() {
         this.options.mountPoint.removeChild(this.modal);
+    }
+
+    public setTheme(themeName: string) {
+        if (!this.themes[themeName]) {
+            console.error(`Theme "${themeName}" nicht gefunden.`);
+            return;
+        }
+        this.themeKeys.forEach(key => this.modal.classList.remove(`theme-${key}`));
+        this.modal.classList.add(`theme-${themeName}`);
+        this.currentTheme = themeName;
+    }
+
+    private cycleTheme() {
+        const currentIndex = this.themeKeys.indexOf(this.currentTheme);
+        const nextIndex = (currentIndex + 1) % this.themeKeys.length;
+        this.setTheme(this.themeKeys[nextIndex]!);
     }
 }
