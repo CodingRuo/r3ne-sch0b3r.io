@@ -14,7 +14,7 @@ Statt eines traditionellen Motivationsschreibens habe ich dieses kleine, framewo
 
 **Neugierig? Probier es direkt auf meiner Portfolio-Webseite aus:**
 
-**[https://www.deine-portfolio-domain.dev](https://www.deine-portfolio-domain.dev)**
+**[https://r3ne-sch0b3r.io](https://r3ne-sch0b3r.io)**
 
 *(Platzhalter-Screenshot oder GIF deines Terminals)*
 ![Screenshot des interaktiven Terminals](https://via.placeholder.com/800x400.png?text=Hier+Screenshot+deines+Terminals+einfügen)
