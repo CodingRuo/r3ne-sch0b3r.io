@@ -1,9 +1,6 @@
-/* src/styles.css */
-
 :root,
 .theme-mocha {
     --font-terminal: 'Maple Mono', 'Fira Code', 'Menlo', monospace;
-    /* Catppuccin Mocha Palette */
     --ctp-base: #1e1e2e;
     --ctp-mantle: #181825;
     --ctp-crust: #11111b;
@@ -21,10 +18,8 @@
 
 .theme-latte {
     --ctp-base: #eff1f5;
-    --ctp-mantle: #e6e9ef;
-    --ctp-crust: #dce0e8;
     --ctp-text: #4c4f69;
-    --ctp-subtext1: #5c5f77;
+    --ctp-mantle: #e6e9ef;
     --ctp-surface0: #acb0be;
     --ctp-blue: #1e66f5;
     --ctp-yellow: #df8e1d;
@@ -38,7 +33,6 @@
 .interactive-cv-modal {
     background-color: var(--ctp-base);
     color: var(--ctp-text);
-    /* ... restliche Styles von vorher bleiben gleich ... */
     position: fixed;
     top: 50%;
     left: 50%;
@@ -48,7 +42,8 @@
     border: 1px solid var(--ctp-surface0);
     border-radius: 12px;
     box-shadow: 0 25px 50px -12px var(--ctp-shadow);
-    display: flex;
+    display: none;
+    /* Standardmäßig versteckt */
     flex-direction: column;
     font-family: var(--font-terminal);
     font-size: 14px;
@@ -89,23 +84,73 @@
     background-color: var(--ctp-green);
 }
 
-.icv-theme-switcher {
-    background-color: var(--ctp-surface0);
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: 12px;
-    border: 1px solid var(--ctp-overlay0);
-}
-
 .icv-header-title {
     color: var(--ctp-subtext1);
     text-align: center;
     flex-grow: 1;
     font-weight: 500;
 }
+
+/* NEUE & VERBESSERTE DROPDOWN-STYLES */
+.icv-theme-dropdown {
+    position: relative;
+    margin-left: auto;
+}
+
+.icv-theme-indicator {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.icv-theme-indicator:hover {
+    background-color: var(--ctp-surface0);
+}
+
+.icv-theme-indicator svg {
+    stroke: var(--ctp-subtext1);
+}
+
+.icv-theme-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    /* Kleiner Abstand */
+    right: 0;
+    background-color: var(--ctp-mantle);
+    border: 1px solid var(--ctp-surface0);
+    border-radius: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.icv-theme-dropdown:hover .icv-theme-menu,
+.icv-theme-menu:hover {
+    display: block;
+}
+
+.icv-theme-menu-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: var(--ctp-subtext1);
+    white-space: nowrap;
+}
+
+.icv-theme-menu-item:hover {
+    background-color: var(--ctp-surface0);
+    color: var(--ctp-text);
+}
+
 
 .icv-body {
     flex-grow: 1;
@@ -146,7 +191,7 @@
     font-family: inherit;
     font-size: inherit;
     flex-grow: 1;
-    caret-color: var(--ctp-rosewater);
+    caret-color: var(--ctp-text);
 }
 
 .icv-input:focus {
@@ -172,6 +217,7 @@
 
 .icv-output-welcome {
     margin-bottom: 1rem;
+    opacity: 0.7;
 }
 
 .icv-output strong {
@@ -185,11 +231,13 @@
 
 .icv-output a {
     color: var(--ctp-sky);
-    text-decoration: underline;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--ctp-sky);
 }
 
 .icv-output a:hover {
-    color: var(--ctp-sapphire);
+    color: var(--ctp-blue);
+    border-bottom-color: var(--ctp-blue);
 }
 
 .icv-output .success {
@@ -213,6 +261,7 @@
 .icv-help-command {
     color: var(--ctp-yellow);
     font-weight: 600;
+    padding-right: 16px;
     width: 180px;
 }
 
@@ -223,82 +272,4 @@
 
 .icv-help-description {
     color: var(--ctp-subtext1);
-}
-
-.icv-theme-switcher {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: 12px;
-}
-
-.icv-theme-switcher:hover {
-    background-color: var(--ctp-surface0);
-}
-
-.icv-theme-switcher svg {
-    stroke: var(--ctp-subtext0);
-}
-
-.icv-theme-dropdown {
-    position: relative;
-    margin-left: auto;
-    margin-right: 12px;
-}
-
-.icv-theme-indicator {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.icv-theme-indicator:hover {
-    background-color: var(--ctp-surface0);
-}
-
-.icv-theme-indicator svg {
-    stroke: var(--ctp-subtext0);
-}
-
-.icv-theme-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: var(--ctp-mantle);
-    border: 1px solid var(--ctp-surface0);
-    border-radius: 6px;
-    list-style: none;
-    margin: 8px 0 0 0;
-    padding: 4px;
-    z-index: 10;
-}
-
-.icv-theme-dropdown:hover .icv-theme-menu,
-.icv-theme-menu:hover {
-  display: block;
-}
-
-.icv-theme-menu-item {
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    color: var(--ctp-subtext1);
-    white-space: nowrap;
-}
-
-.icv-theme-menu-item:hover {
-    background-color: var(--ctp-surface0);
-    color: var(--ctp-text);
 }

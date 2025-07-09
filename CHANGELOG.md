@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.15
+
+### Patch Changes
+
+- Bugfix Hover
+
 ## 0.0.14
 
 ### Patch Changes
