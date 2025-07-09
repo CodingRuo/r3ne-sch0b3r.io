@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.4
+
+### Patch Changes
+
+- Adding README
+
 ## 0.0.3
 
 ### Patch Changes
