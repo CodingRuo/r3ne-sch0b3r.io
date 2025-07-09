@@ -11,6 +11,9 @@ export class Terminal {
     private themes: { [key: string]: Theme };
     private currentTheme: string;
     private themeKeys: string[];
+    private welcomeMessageElement: HTMLElement | null = null;
+    private commandHistory: string[] = [];
+    private commandHistoryIndex = -1;
 
     private readonly defaultProjects: Project[] = [
         {
@@ -142,37 +145,86 @@ export class Terminal {
         this.body = this.modal.querySelector('.icv-body')!;
         this.input = this.modal.querySelector('.icv-input')!;
 
+        this.populateThemeMenu();
+
         this.attachEventListeners();
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
         this.options.mountPoint.appendChild(this.modal);
     }
 
+    private populateThemeMenu() {
+        const menu = this.modal.querySelector('.icv-theme-menu');
+        if (!menu) return;
+
+        this.themeKeys.forEach(themeName => {
+            const li = document.createElement('li');
+            li.className = 'icv-theme-menu-item';
+            li.textContent = themeName.charAt(0).toUpperCase() + themeName.slice(1);
+            li.addEventListener('click', () => {
+                this.setTheme(themeName);
+            });
+            menu.appendChild(li);
+        });
+    }
+
     private createTerminalElement(): HTMLElement {
         const modal = document.createElement('div');
         modal.className = 'interactive-cv-modal';
         modal.innerHTML = `
-      <div class="icv-header">
-        <div class="icv-header-buttons">
-          <div class="icv-btn close"></div>
-          <div class="icv-btn minimize"></div>
-          <div class="icv-btn maximize"></div>
-        </div>
-        <span class="icv-header-title">rene-schober -- bash</span>
-        <button class="icv-theme-switcher" title="Theme wechseln">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/><path d="M12 22.31a8 8 0 0 1 0-11.31zM12 22.31a8 8 0 0 0 0-11.31z"/><path d="M12 2.69a8 8 0 0 1 0 11.31z"/><path d="M12 2.69a8 8 0 0 0 0 11.31z"/></svg>
-</button>
-      </div>
-      <div class="icv-body"></div>
-      <div class="icv-input-line">
-        <span class="icv-prompt">${this.options.prompt || '>'}</span>
-        <input type="text" class="icv-input" autofocus />
-      </div>
-    `;
+          <div class="icv-header">
+            <div class="icv-header-buttons">
+              <div class="icv-btn close"></div>
+              <div class="icv-btn minimize"></div>
+              <div class="icv-btn maximize"></div>
+            </div>
+            <span class="icv-header-title">rene-schober -- bash</span>
+            <div class="icv-theme-dropdown">
+              <div class="icv-theme-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/><path d="M12 22.31a8 8 0 0 1 0-11.31zM12 22.31a8 8 0 0 0 0-11.31z"/><path d="M12 2.69a8 8 0 0 1 0 11.31z"/><path d="M12 2.69a8 8 0 0 0 0 11.31z"/></svg>
+              </div>
+              <ul class="icv-theme-menu">
+                </ul>
+            </div>
+          </div>
+          <div class="icv-body"></div>
+          <div class="icv-input-line">
+            <span class="icv-prompt">${this.options.prompt || '>'}</span>
+            <input type="text" class="icv-input" autofocus />
+          </div>
+        `;
         return modal;
     }
 
     private attachEventListeners() {
+        this.input.addEventListener('keydown', (e) => {
+            if (this.welcomeMessageElement) {
+                this.welcomeMessageElement.style.display = 'none';
+                this.welcomeMessageElement = null;
+            }
+
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (this.commandHistoryIndex > 0) {
+                    this.commandHistoryIndex--;
+                    this.input.value = this.commandHistory[this.commandHistoryIndex] || '';
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (this.commandHistoryIndex < this.commandHistory.length - 1) {
+                    this.commandHistoryIndex++;
+                    this.input.value = this.commandHistory[this.commandHistoryIndex] || '';
+                } else {
+                    this.commandHistoryIndex = this.commandHistory.length;
+                    this.input.value = '';
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                const command = this.input.value.trim();
+                if (command) this.executeCommand(command);
+                this.input.value = '';
+            }
+        });
         this.input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -187,11 +239,20 @@ export class Terminal {
     }
 
     private showWelcomeMessage() {
-        const welcome = this.options.welcomeMessage || 'Willkommen! Tippe "help" für eine Liste aller Befehle.';
-        this.renderOutput(welcome);
+        this.welcomeMessageElement = document.createElement('div');
+        this.welcomeMessageElement.className = 'icv-output icv-output-welcome';
+        this.welcomeMessageElement.innerHTML = this.options.welcomeMessage || 'Willkommen! Tippe "help" für Befehle.';
+        this.body.appendChild(this.welcomeMessageElement);
     }
 
     private executeCommand(commandStr: string) {
+        if (commandStr) {
+            if (this.commandHistory[this.commandHistory.length - 1] !== commandStr) {
+                this.commandHistory.push(commandStr);
+            }
+        }
+        this.commandHistoryIndex = this.commandHistory.length;
+
         if (commandStr.toLowerCase() === 'clear') {
             this.history = [];
             this.body.innerHTML = '';

@@ -16,7 +16,6 @@ Statt eines traditionellen Motivationsschreibens habe ich dieses kleine, framewo
 
 **[https://r3ne-sch0b3r.io](https://r3ne-sch0b3r.io)**
 
-*(Platzhalter-Screenshot oder GIF deines Terminals)*
 <div align="center">
   <img src="./assets/terminal_blank.jpg" width="30%" alt="Terminal Blank">
   <img src="./assets/terminal_help.jpg" width="30%" alt="Terminal Help">
@@ -145,7 +144,7 @@ terminal.open();
 **René Schober**
 
 - GitHub: [@codingruo](https://github.com/codingruo)
-- LinkedIn: [linkedin.com/in/dein-profil](https://linkedin.com/in/dein-profil)
+- LinkedIn: [@linkedIn](https://www.linkedin.com/in/ren%C3%A9-schober-3662aa36b/)
 
 ---
 

@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.13
+
+### Patch Changes
+
+- BugFix Terminal Theme Switcher
+
 ## 0.0.12
 
 ### Patch Changes

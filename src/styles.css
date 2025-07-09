@@ -89,7 +89,6 @@
     background-color: var(--ctp-green);
 }
 
-/* NEU: Theme Switcher Button */
 .icv-theme-switcher {
     background-color: var(--ctp-surface0);
     width: 18px;
@@ -97,7 +96,6 @@
     border-radius: 50%;
     cursor: pointer;
     margin-left: auto;
-    /* Schiebt ihn nach rechts */
     margin-right: 12px;
     border: 1px solid var(--ctp-overlay0);
 }
@@ -166,12 +164,10 @@
     }
 }
 
-/* NEU: Angepasstes Styling für den Output */
 .icv-output {
     white-space: pre-wrap;
     color: var(--ctp-subtext1);
     text-align: left;
-    /* Sorgt für generelle Linksbündigkeit */
 }
 
 .icv-output-welcome {
@@ -200,7 +196,6 @@
     color: var(--ctp-green);
 }
 
-/* NEU: Styling für die help-Tabelle */
 .icv-help-table {
     width: 100%;
     border-collapse: collapse;
@@ -249,4 +244,60 @@
 
 .icv-theme-switcher svg {
     stroke: var(--ctp-subtext0);
+}
+
+.icv-theme-dropdown {
+    position: relative;
+    margin-left: auto;
+    margin-right: 12px;
+}
+
+.icv-theme-indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.icv-theme-indicator:hover {
+    background-color: var(--ctp-surface0);
+}
+
+.icv-theme-indicator svg {
+    stroke: var(--ctp-subtext0);
+}
+
+.icv-theme-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--ctp-mantle);
+    border: 1px solid var(--ctp-surface0);
+    border-radius: 6px;
+    list-style: none;
+    margin: 8px 0 0 0;
+    padding: 4px;
+    z-index: 10;
+}
+
+.icv-theme-dropdown:hover .icv-theme-menu {
+    display: block;
+}
+
+.icv-theme-menu-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: var(--ctp-subtext1);
+    white-space: nowrap;
+}
+
+.icv-theme-menu-item:hover {
+    background-color: var(--ctp-surface0);
+    color: var(--ctp-text);
 }
