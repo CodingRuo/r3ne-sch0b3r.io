@@ -17,7 +17,11 @@ Statt eines traditionellen Motivationsschreibens habe ich dieses kleine, framewo
 **[https://r3ne-sch0b3r.io](https://r3ne-sch0b3r.io)**
 
 *(Platzhalter-Screenshot oder GIF deines Terminals)*
-![Screenshot des interaktiven Terminals](https://via.placeholder.com/800x400.png?text=Hier+Screenshot+deines+Terminals+einfügen)
+<div align="center">
+  <img src="./assets/terminal_blank.jpg" width="30%" alt="Terminal Blank">
+  <img src="./assets/terminal_help.jpg" width="30%" alt="Terminal Help">
+  <img src="./assets/terminal_light.jpg" width="30%" alt="Terminal Light">
+</div>
 
 ---
 

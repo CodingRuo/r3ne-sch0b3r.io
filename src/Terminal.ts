@@ -57,10 +57,10 @@ export class Terminal {
         },
         'rene.getskills': {
             description: 'Listet meinen Tech-Stack auf.',
-            output: `<strong class="highlight">🎨 Frontend:</strong>  Vue.js, Quasar Framework, TypeScript, HTML5, CSS3<br>` +
-                `<strong class="highlight">⚙️ Backend:</strong>   Node.js, Fastify, REST APIs, Clean Architecture<br>` +
-                `<strong class="highlight">🗄️ Datenbank:</strong> MongoDB, Mongoose ODM<br>` +
-                `<strong class="highlight">🐳 DevOps:</strong>    Docker, Linux Server Administration, NGINX`
+            output: `<strong class="highlight">🎨 Frontend:</strong>  Vue.js, Quasar Framework, TypeScript, HTML5, CSS3, React, Tailwind CSS, Next.js, Nuxt.js<br>` +
+                `<strong class="highlight">⚙️ Backend:</strong>   Node.js, Fastify, REST APIs, Clean Architecture, Express.js<br>` +
+                `<strong class="highlight">🗄️ Datenbank:</strong> MongoDB, Mongoose ODM, PostgreSQL, Supabase, Prisma<br>` +
+                `<strong class="highlight">🐳 DevOps:</strong>    Docker, Linux Server Administration, NGINX, CI/CD, Git, GitHub Actions`
         },
         'rene.showprojects': {
             description: 'Zeigt eine Übersicht meiner Schlüsselprojekte.',
@@ -84,8 +84,9 @@ export class Terminal {
         'rene.contact': {
             description: 'Gibt meine Kontaktdaten aus.',
             output: `Du kannst mich gerne jederzeit erreichen:<br><br>` +
-                `📧 <strong>E-Mail:</strong>   <a href="mailto:deine.email@provider.com">deine.email@provider.com</a><br>` +
-                `💼 <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/dein-profil" target="_blank">linkedin.com/in/dein-profil</a>`
+                `📧 <strong>E-Mail:</strong>   <a href="mailto:r.schober@outlook.com">r.schober@outlook.com</a><br>` +
+                `💼 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ren%C3%A9-schober-3662aa36b/" target="_blank">LinkedIn</a>` +
+                `💼 <strong>GitHub:</strong> <a href="https://github.com/codingruo" target="_blank">GitHub</a>` +
         },
         'theme': {
             description: 'Ändert das Farbschema. Verfügbar: [themes].',

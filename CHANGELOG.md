@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.11
+
+### Patch Changes
+
+- Adding Screenshots to the Package and contact credentials
+
 ## 0.0.10
 
 ### Patch Changes
