@@ -1,5 +1,8 @@
 import type { TerminalOptions, Command, CommandMap, Theme, Project } from './types';
 
+const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"/></svg>`;
+const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"/></svg>`;
+
 export class Terminal {
     private options: TerminalOptions;
     private history: { command: string; output: string }[] = [];
@@ -181,10 +184,8 @@ export class Terminal {
             <span class="icv-header-title">rene-schober -- bash</span>
             <div class="icv-theme-dropdown">
               <div class="icv-theme-indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/><path d="M12 22.31a8 8 0 0 1 0-11.31zM12 22.31a8 8 0 0 0 0-11.31z"/><path d="M12 2.69a8 8 0 0 1 0 11.31z"/><path d="M12 2.69a8 8 0 0 0 0 11.31z"/></svg>
-              </div>
-              <ul class="icv-theme-menu">
-                </ul>
+                </div>
+              <ul class="icv-theme-menu"></ul>
             </div>
           </div>
           <div class="icv-body"></div>
@@ -310,13 +311,6 @@ export class Terminal {
         this.body.scrollTop = this.body.scrollHeight;
     }
 
-    private renderOutput(output: string) {
-        const outputDiv = document.createElement('div');
-        outputDiv.className = 'icv-output';
-        outputDiv.innerHTML = output;
-        this.body.appendChild(outputDiv);
-    }
-
     public open() {
         this.modal.style.display = 'flex';
         this.input.focus();
@@ -335,9 +329,16 @@ export class Terminal {
             console.error(`Theme "${themeName}" nicht gefunden.`);
             return;
         }
+
         this.themeKeys.forEach(key => this.modal.classList.remove(`theme-${key}`));
+
         this.modal.classList.add(`theme-${themeName}`);
         this.currentTheme = themeName;
+
+        const indicator = this.modal.querySelector('.icv-theme-indicator');
+        if (indicator) {
+            indicator.innerHTML = themeName === 'latte' ? moonIcon : sunIcon;
+        }
     }
 
     private cycleTheme() {

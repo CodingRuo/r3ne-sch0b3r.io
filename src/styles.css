@@ -285,8 +285,9 @@
     z-index: 10;
 }
 
-.icv-theme-dropdown:hover .icv-theme-menu {
-    display: block;
+.icv-theme-dropdown:hover .icv-theme-menu,
+.icv-theme-menu:hover {
+  display: block;
 }
 
 .icv-theme-menu-item {
