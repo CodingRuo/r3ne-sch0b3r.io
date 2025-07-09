@@ -86,7 +86,7 @@ export class Terminal {
             output: `Du kannst mich gerne jederzeit erreichen:<br><br>` +
                 `📧 <strong>E-Mail:</strong>   <a href="mailto:r.schober@outlook.com">r.schober@outlook.com</a><br>` +
                 `💼 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ren%C3%A9-schober-3662aa36b/" target="_blank">LinkedIn</a>` +
-                `💼 <strong>GitHub:</strong> <a href="https://github.com/codingruo" target="_blank">GitHub</a>` +
+                `💼 <strong>GitHub:</strong> <a href="https://github.com/codingruo" target="_blank">GitHub</a>`
         },
         'theme': {
             description: 'Ändert das Farbschema. Verfügbar: [themes].',
