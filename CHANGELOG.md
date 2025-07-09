@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.6
+
+### Patch Changes
+
+- BugFix Terminal and Change Styling
+
 ## 0.0.5
 
 ### Patch Changes
