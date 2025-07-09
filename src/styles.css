@@ -229,3 +229,24 @@
 .icv-help-description {
     color: var(--ctp-subtext1);
 }
+
+.icv-theme-switcher {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 12px;
+}
+
+.icv-theme-switcher:hover {
+    background-color: var(--ctp-surface0);
+}
+
+.icv-theme-switcher svg {
+    stroke: var(--ctp-subtext0);
+}

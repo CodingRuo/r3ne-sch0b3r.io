@@ -14,13 +14,22 @@ export class Terminal {
 
     private readonly defaultProjects: Project[] = [
         {
-            name: 'Admin-Oberfläche (Eigenverantwortliche Neuentwicklung)',
-            description: '→ Komplexe Vue.js/Quasar Anwendung mit Node.js Backend nach Clean-Architecture-Prinzipien.',
+            name: 'PortForge - Self-Hosted Docker Management',
+            description: 'Eine moderne Portainer-Alternative zur einfachen Verwaltung von Docker-Containern.',
+            technologies: ['Vue.js', 'Quasar', 'TypeScript', 'Node.js', 'Docker API'],
+            url: 'https://www.portforge.dev',
+            githubUrl: 'https://github.com/CodingRuo/PortForge'
         },
         {
-            name: 'DevOps & Server-Infrastruktur',
-            description: '→ Aufbau und Verwaltung von Linux-Servern, Docker-Containern und NGINX-Konfigurationen.',
-            url: 'https://github.com/codingruo'
+            name: 'Interaktives CV (Dieses Package)',
+            description: 'Eine wiederverwendbare, framework-unabhängige Bibliothek, die ein Terminal-Interface als NPM-Package bereitstellt.',
+            technologies: ['TypeScript', 'Vanilla JS', 'Vite', 'NPM Publishing'],
+            githubUrl: 'https://github.com/codingruo/r3ne-sch0b3r.io'
+        },
+        {
+            name: 'Admin-Plattform & DevOps',
+            description: 'Eigenverantwortliche Neuentwicklung einer Management-Plattform inklusive Aufbau der kompletten Server-Infrastruktur.',
+            technologies: ['Linux', 'Docker', 'NGINX', 'Clean Architecture', 'Full-Stack'],
         }
     ];
 
@@ -56,13 +65,18 @@ export class Terminal {
         'rene.showprojects': {
             description: 'Zeigt eine Übersicht meiner Schlüsselprojekte.',
             output: () => {
-                let projectOutput = 'Hier sind meine Kernprojekte. Für Details besuche bitte die verlinkten Seiten.<br><br>';
+                let projectOutput = 'Hier sind einige meiner wichtigsten Projekte:<br><br>';
                 this.projects.forEach(p => {
+                    projectOutput += `<strong>${p.name}</strong><br>`;
+                    projectOutput += `<span class="highlight">${p.description}</span><br>`;
+                    projectOutput += `<strong>  Tech:</strong> ${p.technologies.join(', ')}<br>`;
                     if (p.url) {
-                        projectOutput += `<strong><a href="${p.url}" target="_blank">${p.name}</a></strong><br>${p.description}<br><br>`;
-                    } else {
-                        projectOutput += `<strong>${p.name}</strong><br>${p.description}<br><br>`;
+                        projectOutput += `<strong>  Live:</strong> <a href="${p.url}" target="_blank">${p.url}</a><br>`;
                     }
+                    if (p.githubUrl) {
+                        projectOutput += `<strong>  Code:</strong> <a href="${p.githubUrl}" target="_blank">${p.githubUrl}</a><br>`;
+                    }
+                    projectOutput += '<br>';
                 });
                 return projectOutput;
             }
@@ -144,7 +158,9 @@ export class Terminal {
           <div class="icv-btn maximize"></div>
         </div>
         <span class="icv-header-title">rene-schober -- bash</span>
-        <div class="icv-theme-switcher" title="Theme wechseln"></div>
+        <button class="icv-theme-switcher" title="Theme wechseln">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/><path d="M12 22.31a8 8 0 0 1 0-11.31zM12 22.31a8 8 0 0 0 0-11.31z"/><path d="M12 2.69a8 8 0 0 1 0 11.31z"/><path d="M12 2.69a8 8 0 0 0 0 11.31z"/></svg>
+</button>
       </div>
       <div class="icv-body"></div>
       <div class="icv-input-line">

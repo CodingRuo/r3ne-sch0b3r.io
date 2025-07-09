@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.10
+
+### Patch Changes
+
+- Fixing Projects and Theme Switch
+
 ## 0.0.9
 
 ### Patch Changes

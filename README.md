@@ -44,6 +44,59 @@ pnpm add @codingruo/r3ne-sch0b3r.io
 
 ### 2. Verwendung:
 
+```vue
+<template>
+  <div id="terminal-container" style="height: 100vh; width: 100vw;"></div>
+</template>
+
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+import { createInteractiveCV } from '@codingruo/r3ne-sch0b3r.io';
+import '@codingruo/r3ne-sch0b3r.io/styles.css';
+
+let terminalInstance = null;
+
+onMounted(() => {
+  terminalInstance = createInteractiveCV('terminal-container');
+  terminalInstance.open();
+});
+
+onUnmounted(() => {
+  if (terminalInstance) {
+    terminalInstance.destroy();
+  }
+});
+</script>
+```
+
+```jsx
+import { useEffect, useState } from 'react';
+import { createInteractiveCV, Terminal } from '@codingruo/r3ne-sch0b3r.io';
+import '@codingruo/r3ne-sch0b3r.io/styles.css';
+
+function App() {
+  const [terminal, setTerminal] = useState<Terminal | null>(null);
+
+  useEffect(() => {
+    const terminalInstance = createInteractiveCV('terminal-container', {
+      welcomeMessage: 'Willkommen! Tippe "help" für Befehle.',
+      defaultTheme: 'mocha' // oder 'latte'
+    });
+    setTerminal(terminalInstance);
+    terminalInstance.open();
+
+    return () => terminalInstance.destroy();
+  }, []);
+
+  return (
+    // Dieses Div dient als Mount-Point für das Terminal
+    <div id="terminal-container" style={{ height: '100vh', width: '100vw' }} />
+  );
+}
+
+export default App;
+```
+
 ```javascript
 import { createInteractiveCV } from '@codingruo/r3ne-sch0b3r.io';
 // Vergiss nicht, das CSS zu importieren!
