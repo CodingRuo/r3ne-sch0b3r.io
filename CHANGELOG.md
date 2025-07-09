@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.8
+
+### Patch Changes
+
+- Bugfix Terminal
+
 ## 0.0.7
 
 ### Patch Changes

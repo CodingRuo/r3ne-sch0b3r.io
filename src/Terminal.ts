@@ -45,14 +45,17 @@ export class Terminal {
     };
 
     private getHelpText(): string {
-        let helpText = 'Verfügbare Befehle:\n\n';
+        let tableRows = '';
         for (const key in this.commands) {
-            // @ts-ignore
-            helpText += `${key.padEnd(20)} → ${this.commands[key].description}\n`;
+            tableRows += `
+        <tr>
+          <td class="icv-help-command">${key}</td>
+          <td class="icv-help-arrow">→</td>
+          <td class="icv-help-description">${this.commands[key]?.description || 'Beschreibung nicht verfügbar'}</td>
+        </tr>
+      `;
         }
-        // @ts-ignore
-        helpText += `${'clear'.padEnd(20)} → Leert den Terminal-Bildschirm.`;
-        return helpText;
+        return `Verfügbare Befehle:\n<table class="icv-help-table">${tableRows}</table>`;
     }
 
     constructor(options: TerminalOptions) {

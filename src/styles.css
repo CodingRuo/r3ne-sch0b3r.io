@@ -1,7 +1,6 @@
 :root {
     --font-terminal: 'Maple Mono', 'Fira Code', 'Menlo', monospace;
 
-    /* Catppuccin Mocha Palette */
     --ctp-rosewater: #f5e0dc;
     --ctp-flamingo: #f2cdcd;
     --ctp-pink: #f5c2e7;
@@ -36,9 +35,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 720px;
-    /* Standardbreite */
     height: 520px;
-    /* Standardhöhe */
     background-color: var(--ctp-base);
     border: 1px solid var(--ctp-surface0);
     border-radius: 12px;
@@ -171,4 +168,32 @@
     50% {
         opacity: 0;
     }
+}
+
+.icv-help-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.icv-help-command,
+.icv-help-arrow,
+.icv-help-description {
+    vertical-align: top;
+    padding-bottom: 4px;
+}
+
+.icv-help-command {
+    color: var(--ctp-yellow);
+    font-weight: 600;
+    width: 180px;
+}
+
+.icv-help-arrow {
+    width: 40px;
+    color: var(--ctp-blue);
+}
+
+.icv-help-description {
+    color: var(--ctp-subtext1);
 }
