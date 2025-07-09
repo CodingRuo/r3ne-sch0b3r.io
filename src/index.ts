@@ -5,12 +5,17 @@ import './styles.css';
 /**
  * Erstellt und initialisiert ein neues interaktives CV-Terminal.
  * @param mountPointId - Die ID des HTML-Elements, an das das Terminal angehängt werden soll.
- * @param options - Ein optionales Objekt für benutzerdefinierte Befehle und eine Willkommensnachricht.
+ * @param options - Ein optionales Objekt für Konfigurationen.
  * @returns Eine Instanz der Terminal-Klasse.
  */
 export function createInteractiveCV(
-    mountPointId: string, 
-    options: { customCommands?: CommandMap, welcomeMessage?: string } = {}
+    mountPointId: string,
+    options: {
+      customCommands?: CommandMap,
+      welcomeMessage?: string,
+      width?: string,
+      height?: string
+    } = {}
 ): Terminal {
   const mountPoint = document.getElementById(mountPointId);
   if (!mountPoint) {
@@ -19,12 +24,12 @@ export function createInteractiveCV(
 
   const terminalOptions: TerminalOptions = {
     mountPoint,
-    customCommands: options.customCommands,
-    welcomeMessage: options.welcomeMessage,
+    ...options,
     prompt: '>',
   };
 
   return new Terminal(terminalOptions);
 }
 
+export { Terminal };
 export type { Command, CommandMap, TerminalOptions };

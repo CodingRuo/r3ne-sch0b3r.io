@@ -9,7 +9,9 @@ export interface CommandMap {
 
 export interface TerminalOptions {
     mountPoint: HTMLElement;
-    customCommands?: CommandMap
+    customCommands?: CommandMap;
     welcomeMessage?: string;
     prompt?: string;
+    width?: string;
+    height?: string;
 }

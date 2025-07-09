@@ -11,16 +11,16 @@ export class Terminal {
     private readonly defaultCommands: CommandMap = {
         'rene.whoami': {
             description: 'Eine kurze Vorstellung meiner Person und Vision.',
-            output: `René Schober - Full-Stack Entwickler aus Salzburg.\n\n` +
-                `🚀 Ich bin ein leidenschaftlicher Entwickler, der den gesamten Entwicklungszyklus liebt – von der ersten Idee bis zum produktiven Server.\n` +
+            output: `<strong>René Schober</strong> - Full-Stack Entwickler aus Salzburg.<br><br>` +
+                `🚀 Ich bin ein leidenschaftlicher Entwickler, der den <strong class="highlight">gesamten Entwicklungszyklus</strong> liebt – von der ersten Idee bis zum produktiven Server.<br>` +
                 `💡 Meine Stärke liegt darin, komplexe Probleme in elegante, skalierbare Lösungen zu verwandeln.`
         },
         'rene.getskills': {
             description: 'Listet meinen Tech-Stack auf.',
-            output: `🎨 Frontend:  Vue.js, Quasar Framework, TypeScript, HTML5, CSS3\n` +
-                `⚙️  Backend:   Node.js, Fastify, RESTful APIs, Clean Architecture\n` +
-                `🗄️  Datenbank: MongoDB, Mongoose ODM\n` +
-                `🐳 DevOps:    Docker, Linux Server Administration, NGINX`
+            output: `<strong class="highlight">🎨 Frontend:</strong>  Vue.js, Quasar Framework, TypeScript, HTML5, CSS3<br>` +
+                `<strong class="highlight">⚙️ Backend:</strong>   Node.js, Fastify, REST APIs, Clean Architecture<br>` +
+                `<strong class="highlight">🗄️ Datenbank:</strong> MongoDB, Mongoose ODM<br>` +
+                `<strong class="highlight">🐳 DevOps:</strong>    Docker, Linux Server Administration, NGINX`
         },
         'rene.showprojects': {
             description: 'Zeigt eine Übersicht meiner Schlüsselprojekte.',
@@ -58,9 +58,22 @@ export class Terminal {
     constructor(options: TerminalOptions) {
         this.options = options;
 
-        this.commands = { ...this.defaultCommands, ...this.options.customCommands };
+        const safeCustomCommands = { ...this.options.customCommands };
+        if (safeCustomCommands.help) {
+            console.warn('[InteractiveCV] Der "help"-Befehl kann nicht überschrieben werden.');
+            delete safeCustomCommands.help;
+        }
+        if (safeCustomCommands.clear) {
+            delete safeCustomCommands.clear;
+        }
+
+        this.commands = { ...this.defaultCommands, ...safeCustomCommands };
 
         this.modal = this.createTerminalElement();
+
+        if (this.options.width) this.modal.style.width = this.options.width;
+        if (this.options.height) this.modal.style.height = this.options.height;
+
         this.body = this.modal.querySelector('.icv-body')!;
         this.input = this.modal.querySelector('.icv-input')!;
 
@@ -144,13 +157,24 @@ export class Terminal {
         this.history.forEach(entry => {
             const entryDiv = document.createElement('div');
             entryDiv.className = 'icv-history-entry';
-            entryDiv.innerHTML = `
-        <div class="icv-prompt-line">
-          <span class="icv-prompt">${this.options.prompt || '$'}</span>
-          <span class="icv-command-text">${entry.command}</span>
-        </div>
-        <div class="icv-output">${entry.output}</div>
-      `;
+
+            const promptLine = document.createElement('div');
+            promptLine.className = 'icv-prompt-line';
+            const promptSpan = document.createElement('span');
+            promptSpan.className = 'icv-prompt';
+            promptSpan.textContent = this.options.prompt || '$';
+            const commandSpan = document.createElement('span');
+            commandSpan.className = 'icv-command-text';
+            commandSpan.textContent = entry.command;
+            promptLine.appendChild(promptSpan);
+            promptLine.appendChild(commandSpan);
+
+            const outputDiv = document.createElement('div');
+            outputDiv.className = 'icv-output';
+            outputDiv.innerHTML = entry.output;
+
+            entryDiv.appendChild(promptLine);
+            entryDiv.appendChild(outputDiv);
             this.body.appendChild(entryDiv);
         });
         this.body.scrollTop = this.body.scrollHeight;
@@ -159,7 +183,7 @@ export class Terminal {
     private renderOutput(output: string) {
         const outputDiv = document.createElement('div');
         outputDiv.className = 'icv-output';
-        outputDiv.textContent = output;
+        outputDiv.innerHTML = output;
         this.body.appendChild(outputDiv);
     }
 
