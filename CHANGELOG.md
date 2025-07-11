@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.1.0
+
+### Minor Changes
+
+- Create Backdrop for Terminal
+
 ## 0.0.21
 
 ### Patch Changes

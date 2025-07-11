@@ -17,6 +17,7 @@ export class Terminal {
     private welcomeMessageElement: HTMLElement | null = null;
     private commandHistory: string[] = [];
     private commandHistoryIndex = -1;
+    private backdrop: HTMLElement;
 
     private readonly defaultProjects: Project[] = [
         {
@@ -141,7 +142,9 @@ export class Terminal {
         if (safeCustomCommands.clear) delete safeCustomCommands.clear;
         this.commands = { ...this.defaultCommands, ...safeCustomCommands };
 
-        this.modal = this.createTerminalElement();
+        this.backdrop = this.createTerminalElement();
+        this.modal = this.backdrop.querySelector('.interactive-cv-modal')!;
+
         if (this.options.width) this.modal.style.width = this.options.width;
         if (this.options.height) this.modal.style.height = this.options.height;
 
@@ -152,10 +155,14 @@ export class Terminal {
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
 
+        this.backdrop.style.display = 'none';
         this.options.mountPoint.appendChild(this.modal);
     }
 
     private createTerminalElement(): HTMLElement {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'interactive-cv-backdrop';
+
         const modal = document.createElement('div');
         modal.className = 'interactive-cv-modal';
         modal.innerHTML = `
@@ -178,6 +185,7 @@ export class Terminal {
         <input type="text" class="icv-input" autofocus />
       </div>
     `;
+        backdrop.appendChild(modal);
         return modal;
     }
 
@@ -212,8 +220,13 @@ export class Terminal {
         });
 
         this.modal.querySelector('.icv-btn.close')?.addEventListener('click', () => this.close());
-
         this.modal.querySelector('.icv-theme-indicator')?.addEventListener('click', () => this.cycleTheme());
+
+        this.backdrop.addEventListener('click', (e) => {
+            if (e.target === this.backdrop) {
+                this.close();
+            }
+        });
     }
 
     private showWelcomeMessage() {
@@ -289,17 +302,18 @@ export class Terminal {
     }
 
     public open() {
+        this.backdrop.style.display = 'block';
         this.modal.style.display = 'flex';
         this.input.focus();
     }
 
     public close() {
-        // this.modal.classList.remove('open');
+        this.backdrop.style.display = 'none';
         this.modal.style.display = 'none';
     }
 
     public destroy() {
-        this.options.mountPoint.removeChild(this.modal);
+        this.options.mountPoint.removeChild(this.backdrop);
     }
 
     public setTheme(themeName: string) {
