@@ -153,6 +153,8 @@ export class Terminal {
         this.attachEventListeners();
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
+        
+        this.modal.style.display = 'none';
         this.options.mountPoint.appendChild(this.modal);
     }
 

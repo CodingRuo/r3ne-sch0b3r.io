@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.17
+
+### Patch Changes
+
+- BugFix Terminal Initial Open removed
+
 ## 0.0.16
 
 ### Patch Changes
