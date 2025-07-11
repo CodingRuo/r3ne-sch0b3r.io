@@ -47,83 +47,44 @@ pnpm add @codingruo/r3ne-sch0b3r.io
 
 ### 2. Verwendung:
 
-```vue
-<template>
-  <div id="terminal-container" style="height: 100vh; width: 100vw;"></div>
-</template>
-
-<script setup>
-import { onMounted, onUnmounted } from 'vue';
-import { createInteractiveCV } from '@codingruo/r3ne-sch0b3r.io';
-import '@codingruo/r3ne-sch0b3r.io/styles.css';
-
-let terminalInstance = null;
-
-onMounted(() => {
-  terminalInstance = createInteractiveCV('terminal-container');
-  terminalInstance.open();
-});
-
-onUnmounted(() => {
-  if (terminalInstance) {
-    terminalInstance.destroy();
-  }
-});
-</script>
-```
-
 ```jsx
-import { useEffect, useState } from 'react';
-import { createInteractiveCV, Terminal } from '@codingruo/r3ne-sch0b3r.io';
+import { useEffect, useState } from 'react'
+
+import { createInteractiveCV } from '@codingruo/r3ne-sch0b3r.io';
+import type { Terminal } from '@codingruo/r3ne-sch0b3r.io';
 import '@codingruo/r3ne-sch0b3r.io/styles.css';
 
 function App() {
-  const [terminal, setTerminal] = useState<Terminal | null>(null);
+    const [terminal, setTerminal] = useState<Terminal | null>(null)
 
-  useEffect(() => {
-    const terminalInstance = createInteractiveCV('terminal-container', {
-      welcomeMessage: 'Willkommen! Tippe "help" für Befehle.',
-      defaultTheme: 'mocha' // oder 'latte'
-    });
-    setTerminal(terminalInstance);
-    terminalInstance.open();
+    useEffect(() => {
 
-    return () => terminalInstance.destroy();
-  }, []);
+        const myCommands = {
+            'hello': {
+                description: 'Sagt Hallo',
+                output: 'Hallo Welt! Dies ist ein benutzerdefinierter Befehl.'
+            },
+        };
 
-  return (
-    // Dieses Div dient als Mount-Point für das Terminal
-    <div id="terminal-container" style={{ height: '100vh', width: '100vw' }} />
-  );
+        const terminalInstance = createInteractiveCV('terminal-container', {
+            customCommands: myCommands,
+            height: '500px',
+            width: '600px',
+        });
+        setTerminal(terminalInstance);
+    }, []);
+
+    return (
+        <>
+            <button onClick={() => terminal?.open()}>Klick</button>
+            <div id="terminal-container" />
+        </>
+    )
 }
 
-export default App;
+export default App
+
 ```
-
-```javascript
-import { createInteractiveCV } from '@codingruo/r3ne-sch0b3r.io';
-// Vergiss nicht, das CSS zu importieren!
-import '@codingruo/r3ne-sch0b3r.io/style.css';
-
-// Definiere deine Befehle
-const myCommands = {
-  'hello': {
-    description: 'Sagt Hallo',
-    output: 'Hallo Welt! Dies ist ein benutzerdefinierter Befehl.'
-  },
-  'help': {
-    description: 'Zeigt alle Befehle an',
-    output: () => `Verfügbare Befehle: ${Object.keys(myCommands).join(', ')}`
-  }
-};
-
-// Hänge das Terminal an ein beliebiges DOM-Element an (z.B. an das Root-Element deiner App)
-const terminal = createInteractiveCV('app', myCommands, 'Dein Terminal ist bereit!');
-
-// Öffne das Terminal
-terminal.open();
-```
-
 ---
 
 ## 🖥️ Verfügbare Befehle in meiner Bewerbung
