@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.20
+
+### Patch Changes
+
+- bugfix theme switcher
+
 ## 0.0.19
 
 ### Patch Changes

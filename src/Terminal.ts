@@ -150,7 +150,7 @@ export class Terminal {
 
         this.populateThemeMenu();
         this.attachEventListeners();
-        
+
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
 
@@ -187,7 +187,6 @@ export class Terminal {
           <div class="icv-theme-indicator">
             ${this.currentTheme === 'latte' ? moonIcon : sunIcon}
           </div>
-          <ul class="icv-theme-menu"></ul>
         </div>
       </div>
       <div class="icv-body"></div>
