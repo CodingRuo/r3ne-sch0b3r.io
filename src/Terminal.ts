@@ -186,7 +186,7 @@ export class Terminal {
       </div>
     `;
         backdrop.appendChild(modal);
-        return modal;
+        return backdrop;
     }
 
     private attachEventListeners() {
