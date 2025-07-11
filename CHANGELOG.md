@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.1.2
+
+### Patch Changes
+
+- BugFix Modal
+
 ## 0.1.1
 
 ### Patch Changes

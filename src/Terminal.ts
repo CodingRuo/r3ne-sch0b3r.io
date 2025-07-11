@@ -156,7 +156,7 @@ export class Terminal {
         this.showWelcomeMessage();
 
         this.backdrop.style.display = 'none';
-        this.options.mountPoint.appendChild(this.modal);
+        this.options.mountPoint.appendChild(this.backdrop);
     }
 
     private createTerminalElement(): HTMLElement {
