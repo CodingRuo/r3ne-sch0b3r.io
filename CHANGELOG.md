@@ -1,5 +1,11 @@
 # @codingruo/r3ne-sch0b3r.io
 
+## 0.0.21
+
+### Patch Changes
+
+- Remove Theme Dropdown
+
 ## 0.0.20
 
 ### Patch Changes

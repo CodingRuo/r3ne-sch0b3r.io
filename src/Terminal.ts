@@ -95,14 +95,14 @@ export class Terminal {
                 `💼 <strong>GitHub:</strong> <a href="https://github.com/codingruo" target="_blank">GitHub</a>`
         },
         'theme': {
-            description: 'Ändert das Farbschema. Verfügbar: [themes].',
+            description: 'Ändert das Farbschema. Verfügbar: [themes]. Oder klicke das Symbol oben rechts.',
             output: (params?: string[]) => {
                 const themeName = params?.[0]?.toLowerCase();
                 if (themeName && this.themes[themeName]) {
                     this.setTheme(themeName);
                     return `<span class="success">Theme erfolgreich zu '${themeName}' geändert.</span>`;
                 }
-                return `Fehler: Unbekanntes Theme. Verfügbar sind: ${this.themeKeys.join(', ')}`;
+                return `Fehler: Unbekanntes Theme. Verfügbar sind: ${this.themeKeys.join(', ')}<br><br>💡 <strong>Tipp:</strong> Klicke das Symbol oben rechts für schnellen Wechsel!`;
             }
         },
         'help': {
@@ -147,29 +147,12 @@ export class Terminal {
 
         this.body = this.modal.querySelector('.icv-body')!;
         this.input = this.modal.querySelector('.icv-input')!;
-
-        this.populateThemeMenu();
         this.attachEventListeners();
 
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
 
         this.options.mountPoint.appendChild(this.modal);
-    }
-
-    private populateThemeMenu() {
-        const menu = this.modal.querySelector('.icv-theme-menu');
-        if (!menu) return;
-
-        this.themeKeys.forEach(themeName => {
-            const li = document.createElement('li');
-            li.className = 'icv-theme-menu-item';
-            li.textContent = themeName.charAt(0).toUpperCase() + themeName.slice(1);
-            li.addEventListener('click', () => {
-                this.setTheme(themeName);
-            });
-            menu.appendChild(li);
-        });
     }
 
     private createTerminalElement(): HTMLElement {

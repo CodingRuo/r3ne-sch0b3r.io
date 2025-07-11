@@ -238,12 +238,6 @@
     stroke: var(--ctp-subtext0);
 }
 
-.icv-theme-dropdown {
-    position: relative;
-    margin-left: auto;
-    margin-right: 12px;
-}
-
 .icv-theme-indicator {
     width: 24px;
     height: 24px;
@@ -264,37 +258,4 @@
     fill: none;
     width: 16px;
     height: 16px;
-}
-
-.icv-theme-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: var(--ctp-mantle);
-    border: 1px solid var(--ctp-surface0);
-    border-radius: 6px;
-    list-style: none;
-    margin: 8px 0 0 0;
-    padding: 4px;
-    z-index: 10;
-    min-width: 120px;
-}
-
-.icv-theme-dropdown:hover .icv-theme-menu {
-    display: block;
-}
-
-.icv-theme-menu-item {
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    color: var(--ctp-subtext1);
-    white-space: nowrap;
-    transition: all 0.2s ease-in-out;
-}
-
-.icv-theme-menu-item:hover {
-    background-color: var(--ctp-surface0);
-    color: var(--ctp-text);
 }
