@@ -154,7 +154,6 @@ export class Terminal {
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
 
-        this.modal.style.display = 'none';
         this.options.mountPoint.appendChild(this.modal);
     }
 
@@ -314,12 +313,13 @@ export class Terminal {
     }
 
     public open() {
-        this.modal.classList.add('open');
+        this.modal.style.display = 'flex';
         this.input.focus();
     }
 
     public close() {
-        this.modal.classList.remove('open');
+        // this.modal.classList.remove('open');
+        this.modal.style.display = 'none';
     }
 
     public destroy() {
