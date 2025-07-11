@@ -149,8 +149,8 @@ export class Terminal {
         this.input = this.modal.querySelector('.icv-input')!;
 
         this.populateThemeMenu();
-
         this.attachEventListeners();
+        
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
 
@@ -176,25 +176,26 @@ export class Terminal {
         const modal = document.createElement('div');
         modal.className = 'interactive-cv-modal';
         modal.innerHTML = `
-          <div class="icv-header">
-            <div class="icv-header-buttons">
-              <div class="icv-btn close"></div>
-              <div class="icv-btn minimize"></div>
-              <div class="icv-btn maximize"></div>
-            </div>
-            <span class="icv-header-title">rene-schober -- bash</span>
-            <div class="icv-theme-dropdown">
-              <div class="icv-theme-indicator">
-                </div>
-              <ul class="icv-theme-menu"></ul>
-            </div>
+      <div class="icv-header">
+        <div class="icv-header-buttons">
+          <div class="icv-btn close"></div>
+          <div class="icv-btn minimize"></div>
+          <div class="icv-btn maximize"></div>
+        </div>
+        <span class="icv-header-title">rene-schober -- bash</span>
+        <div class="icv-theme-dropdown">
+          <div class="icv-theme-indicator">
+            ${this.currentTheme === 'latte' ? moonIcon : sunIcon}
           </div>
-          <div class="icv-body"></div>
-          <div class="icv-input-line">
-            <span class="icv-prompt">${this.options.prompt || '>'}</span>
-            <input type="text" class="icv-input" autofocus />
-          </div>
-        `;
+          <ul class="icv-theme-menu"></ul>
+        </div>
+      </div>
+      <div class="icv-body"></div>
+      <div class="icv-input-line">
+        <span class="icv-prompt">${this.options.prompt || '>'}</span>
+        <input type="text" class="icv-input" autofocus />
+      </div>
+    `;
         return modal;
     }
 
@@ -227,17 +228,10 @@ export class Terminal {
                 this.input.value = '';
             }
         });
-        this.input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const command = this.input.value.trim();
-                if (command) this.executeCommand(command);
-                this.input.value = '';
-            }
-        });
 
         this.modal.querySelector('.icv-btn.close')?.addEventListener('click', () => this.close());
-        this.modal.querySelector('.icv-theme-switcher')?.addEventListener('click', () => this.cycleTheme());
+
+        this.modal.querySelector('.icv-theme-indicator')?.addEventListener('click', () => this.cycleTheme());
     }
 
     private showWelcomeMessage() {
@@ -336,6 +330,12 @@ export class Terminal {
 
         this.modal.classList.add(`theme-${themeName}`);
         this.currentTheme = themeName;
+
+        const theme = this.themes[themeName];
+        // @ts-ignore
+        Object.entries(theme).forEach(([key, value]) => {
+            this.modal.style.setProperty(key, value);
+        });
 
         const indicator = this.modal.querySelector('.icv-theme-indicator');
         if (indicator) {

@@ -92,17 +92,6 @@
     background-color: var(--ctp-green);
 }
 
-.icv-theme-switcher {
-    background-color: var(--ctp-surface0);
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: 12px;
-    border: 1px solid var(--ctp-overlay0);
-}
-
 .icv-header-title {
     color: var(--ctp-subtext1);
     text-align: center;
@@ -271,7 +260,10 @@
 }
 
 .icv-theme-indicator svg {
-    stroke: var(--ctp-subtext0);
+    stroke: var(--ctp-text);
+    fill: none;
+    width: 16px;
+    height: 16px;
 }
 
 .icv-theme-menu {
@@ -286,10 +278,10 @@
     margin: 8px 0 0 0;
     padding: 4px;
     z-index: 10;
+    min-width: 120px;
 }
 
-.icv-theme-dropdown:hover .icv-theme-menu,
-.icv-theme-menu:hover {
+.icv-theme-dropdown:hover .icv-theme-menu {
     display: block;
 }
 
@@ -299,6 +291,7 @@
     border-radius: 4px;
     color: var(--ctp-subtext1);
     white-space: nowrap;
+    transition: all 0.2s ease-in-out;
 }
 
 .icv-theme-menu-item:hover {
