@@ -38,7 +38,7 @@
 .interactive-cv-modal {
     background-color: var(--ctp-base);
     color: var(--ctp-text);
-    display: 'none';
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -48,12 +48,15 @@
     border: 1px solid var(--ctp-surface0);
     border-radius: 12px;
     box-shadow: 0 25px 50px -12px var(--ctp-shadow);
-    display: flex;
     flex-direction: column;
     font-family: var(--font-terminal);
     font-size: 14px;
     z-index: 9999;
     overflow: hidden;
+}
+
+.interactive-cv-modal.open {
+    display: flex;
 }
 
 .icv-header {
@@ -287,7 +290,7 @@
 
 .icv-theme-dropdown:hover .icv-theme-menu,
 .icv-theme-menu:hover {
-  display: block;
+    display: block;
 }
 
 .icv-theme-menu-item {

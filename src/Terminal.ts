@@ -153,7 +153,7 @@ export class Terminal {
         this.attachEventListeners();
         this.setTheme(this.currentTheme);
         this.showWelcomeMessage();
-        
+
         this.modal.style.display = 'none';
         this.options.mountPoint.appendChild(this.modal);
     }
@@ -314,12 +314,12 @@ export class Terminal {
     }
 
     public open() {
-        this.modal.style.display = 'flex';
+        this.modal.classList.add('open');
         this.input.focus();
     }
 
     public close() {
-        this.modal.style.display = 'none';
+        this.modal.classList.remove('open');
     }
 
     public destroy() {
